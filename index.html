@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,13 +10,11 @@
   --border:#2a2a2a;--border2:#333;
   --text:#f0f0f0;--text2:#888;--text3:#555;
   --accent:#ff5c35;--accent2:#ff8a6a;
-  --success:#22c55e;--warning:#f59e0b;--info:#3b82f6;
   --font-display:'Syne',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --r:8px;--r2:12px;--r3:16px;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh}
-
 .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
 .nav-logo{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-0.5px}
 .nav-tabs{display:flex;gap:4px;flex-wrap:wrap}
@@ -28,13 +25,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 .api-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);cursor:pointer;padding:5px 10px;border-radius:var(--r);border:1px solid var(--border);transition:all .2s}
 .api-indicator:hover{border-color:var(--border2);color:var(--text2)}
 .api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3)}
-.api-dot.ok{background:var(--success)}
+.api-dot.ok{background:#22c55e}
 .api-dot.err{background:var(--accent)}
-
 .view{display:none;padding:24px;max-width:900px;margin:0 auto}
 .view.active{display:block}
-
-/* API KEY MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);padding:28px;width:100%;max-width:480px;margin:16px}
@@ -42,17 +36,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 .modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
 .modal-label{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:6px;display:block}
 .modal-input-wrap{display:flex;gap:8px;margin-bottom:8px}
-.modal-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:13px;letter-spacing:.5px}
+.modal-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:13px}
 .modal-input:focus{outline:none;border-color:var(--accent)}
-.modal-save{padding:10px 18px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.modal-save{padding:10px 18px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .modal-save:hover{background:#e04520}
 .modal-hint{font-size:11px;color:var(--text3);line-height:1.5}
 .modal-hint a{color:var(--accent2);text-decoration:none}
-.modal-hint a:hover{text-decoration:underline}
-.modal-close{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--text3);cursor:pointer;transition:color .2s}
+.modal-close{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--text3);cursor:pointer}
 .modal-close:hover{color:var(--text2)}
-
-/* DASHBOARD */
 .dash-title{font-family:var(--font-display);font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
 .dash-sub{color:var(--text2);font-size:13px;margin-bottom:24px}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
@@ -75,8 +66,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-si
 .status-lost{background:rgba(255,92,53,.1);color:var(--accent2)}
 .score-bar{height:4px;background:var(--border2);border-radius:2px;width:80px;overflow:hidden;margin-top:3px}
 .score-fill{height:4px;border-radius:2px;background:var(--accent)}
-
-/* FORM */
 .page-title{font-family:var(--font-display);font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
 .page-sub{color:var(--text2);font-size:13px;margin-bottom:24px;max-width:480px}
 .form-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:16px}
@@ -95,10 +84,8 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .chip{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;font-family:var(--font-body)}
 .chip:hover,.chip.sel{background:var(--accent);border-color:var(--accent);color:#fff}
-.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--r2);color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:all .2s;margin-top:8px}
+.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--r2);color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
 .submit-btn:hover{background:#e04520;transform:translateY(-1px)}
-
-/* DIAGNOSIS */
 .diag-select-wrap{display:flex;gap:10px;align-items:flex-end;margin-bottom:20px}
 .diag-select-wrap select{flex:1}
 .diag-btn{padding:10px 20px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
@@ -115,13 +102,13 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 .diag-score-big{font-family:var(--font-display);font-size:32px;font-weight:800;color:var(--accent)}
 .diag-result-body{padding:20px}
 .diag-content{color:var(--text);font-size:13px;line-height:1.8;white-space:pre-wrap}
-
-/* SEARCH */
+.alert{padding:12px 16px;border-radius:var(--r);font-size:13px;margin-bottom:16px;display:none}
+.alert.show{display:block}
+.alert-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
 .search-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:20px;align-items:flex-end}
 .search-btn{padding:9px 20px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
 .search-btn:hover{background:#e04520}
-.prospect-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:16px;transition:border .2s;margin-bottom:10px}
-.prospect-card:hover{border-color:var(--border2)}
+.prospect-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:16px;margin-bottom:10px}
 .prospect-avatar{width:40px;height:40px;border-radius:var(--r);background:var(--bg4);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--accent);flex-shrink:0}
 .prospect-info{flex:1}
 .prospect-name{font-weight:500;font-size:14px;margin-bottom:2px}
@@ -132,34 +119,26 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 .padd-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 .padd-btn.added{background:rgba(34,197,94,.1);border-color:#22c55e;color:#4ade80;cursor:default}
 .empty-state{text-align:center;padding:40px;color:var(--text3);font-size:13px}
-
-/* ALERT BOX */
-.alert{padding:12px 16px;border-radius:var(--r);font-size:13px;margin-bottom:16px;display:none}
-.alert.show{display:block}
-.alert-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
-.alert-ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#4ade80}
-
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:var(--r);padding:12px 16px;font-size:13px;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;max-width:300px}
 .toast.show{opacity:1;transform:translateY(0)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .view.active{animation:fadeIn .3s ease}
+.timeout-msg{display:none;background:rgba(255,92,53,.1);border:1px solid rgba(255,92,53,.3);color:var(--accent2);padding:12px 16px;border-radius:var(--r);font-size:13px;margin-top:12px}
+.timeout-msg.show{display:block}
 </style>
 </head>
 <body>
 
-<!-- API KEY MODAL -->
 <div class="modal-overlay" id="api-modal">
   <div class="modal">
     <div class="modal-title">Configurar API Key</div>
-    <div class="modal-sub">Cole sua chave da Anthropic para ativar o diagnóstico por IA. A chave fica salva apenas no seu navegador.</div>
+    <div class="modal-sub">Cole sua chave da Anthropic para ativar o diagnóstico por IA. Salva apenas no seu navegador.</div>
     <label class="modal-label">Sua API Key</label>
     <div class="modal-input-wrap">
       <input class="modal-input" type="password" id="api-key-input" placeholder="sk-ant-...">
       <button class="modal-save" onclick="saveApiKey()">Salvar</button>
     </div>
-    <div class="modal-hint">
-      Não tem uma chave ainda? <a href="https://console.anthropic.com" target="_blank">Crie em console.anthropic.com</a> — gratuito para começar. Vá em <strong>API Keys → Create Key</strong>.
-    </div>
+    <div class="modal-hint">Não tem chave? <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → API Keys → Create Key</div>
     <span class="modal-close" onclick="closeModal()">Fechar</span>
   </div>
 </div>
@@ -173,7 +152,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
     <button class="nav-tab" onclick="showView('search',this)">Prospectar</button>
   </div>
   <div class="nav-right">
-    <div class="api-indicator" onclick="openModal()" title="Configurar API Key">
+    <div class="api-indicator" onclick="openModal()">
       <div class="api-dot" id="api-dot"></div>
       <span id="api-status-text">API Key</span>
     </div>
@@ -208,16 +187,9 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   </div>
   <div class="section-title">Pipeline de clientes</div>
   <table class="client-table">
-    <thead>
-      <tr>
-        <th>Empresa</th>
-        <th>Segmento</th>
-        <th>Investimento/mês</th>
-        <th>Score</th>
-        <th>Status</th>
-        <th>Ação</th>
-      </tr>
-    </thead>
+    <thead><tr>
+      <th>Empresa</th><th>Segmento</th><th>Investimento/mês</th><th>Score</th><th>Status</th><th>Ação</th>
+    </tr></thead>
     <tbody id="client-tbody"></tbody>
   </table>
 </div>
@@ -247,9 +219,9 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       </div>
     </div>
     <div class="form-section">
-      <div class="form-section-title">Situação atual de mídia</div>
+      <div class="form-section-title">Situação de mídia</div>
       <div class="form-grid">
-        <div class="form-group full"><label>A empresa já investe em mídia paga?</label>
+        <div class="form-group full"><label>Investe em mídia paga?</label>
           <div class="chips" id="chips-midia">
             <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Não investe nada</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Impulsiona posts às vezes</button>
@@ -257,13 +229,12 @@ input[type=range]{flex:1;accent-color:var(--accent)}
             <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Tem agência atual</button>
           </div>
         </div>
-        <div class="form-group full"><label>Quais canais utiliza hoje?</label>
+        <div class="form-group full"><label>Canais utilizados hoje</label>
           <div class="chips" id="chips-canais">
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Instagram</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Facebook</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Google Ads</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">TikTok</button>
-            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">YouTube</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">WhatsApp</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Nenhum</button>
           </div>
@@ -271,19 +242,19 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       </div>
     </div>
     <div class="form-section">
-      <div class="form-section-title">Investimento</div>
+      <div class="form-section-title">Investimento e equipe</div>
       <div class="form-grid">
-        <div class="form-group full"><label>Quanto investe (ou poderia investir) em mídia por mês?</label>
+        <div class="form-group full"><label>Investimento mensal disponível em mídia</label>
           <div class="range-wrap">
             <input type="range" id="f-invest" min="500" max="30000" step="500" value="2000" oninput="document.getElementById('f-invest-val').textContent='R$ '+Number(this.value).toLocaleString('pt-BR')">
             <span class="range-val" id="f-invest-val">R$ 2.000</span>
           </div>
         </div>
-        <div class="form-group full"><label>Tem equipe interna de marketing?</label>
+        <div class="form-group full"><label>Equipe interna de marketing</label>
           <div class="chips" id="chips-equipe">
             <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Não tem ninguém</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">1 pessoa acumulando função</button>
-            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Tem equipe pequena</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Equipe pequena</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Equipe estruturada</button>
           </div>
         </div>
@@ -292,7 +263,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
     <div class="form-section">
       <div class="form-section-title">Desafios e objetivos</div>
       <div class="form-grid">
-        <div class="form-group full"><label>Principal desafio hoje</label>
+        <div class="form-group full"><label>Principal desafio</label>
           <div class="chips" id="chips-desafio">
             <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Gerar mais clientes</button>
             <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Aumentar ticket médio</button>
@@ -302,7 +273,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
             <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Não sabe o que fazer</button>
           </div>
         </div>
-        <div class="form-group full"><label>Objetivo principal nos próximos 6 meses</label>
+        <div class="form-group full"><label>Objetivo nos próximos 6 meses</label>
           <textarea id="f-objetivo" placeholder="Ex: Dobrar número de clientes, lançar produto novo..."></textarea>
         </div>
         <div class="form-group full"><label>Observações adicionais</label>
@@ -317,10 +288,8 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <!-- DIAGNÓSTICO -->
 <div class="view" id="view-diagnosis">
   <div class="page-title">Diagnóstico por IA</div>
-  <div class="page-sub">Selecione um cliente e gere uma análise completa com recomendações estratégicas.</div>
-  <div class="alert alert-warn" id="diag-no-key">
-    ⚠ API Key não configurada. Clique em <strong>API Key</strong> no canto superior direito para ativar o diagnóstico por IA.
-  </div>
+  <div class="page-sub">Selecione um cliente e gere uma análise estratégica completa.</div>
+  <div class="alert alert-warn" id="diag-no-key">⚠ API Key não configurada. Clique em <strong>API Key</strong> no canto superior direito.</div>
   <div class="diag-select-wrap">
     <div class="form-group" style="flex:1"><label>Selecionar empresa</label>
       <select id="diag-select"><option value="">Nenhum cliente cadastrado</option></select>
@@ -329,8 +298,12 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   </div>
   <div class="diag-loading" id="diag-loading">
     <div class="loader"></div>
-    <div style="font-size:13px">Analisando e gerando diagnóstico...</div>
-    <div style="font-size:12px;color:var(--text3);margin-top:4px">Isso pode levar alguns segundos</div>
+    <div style="font-size:13px;margin-bottom:4px">Gerando diagnóstico...</div>
+    <div style="font-size:12px;color:var(--text3)" id="diag-timer">0s</div>
+  </div>
+  <div class="timeout-msg" id="timeout-msg">
+    ⚠ Está demorando mais que o esperado. Verifique sua conexão ou tente novamente.
+    <button onclick="cancelDiagnosis()" style="margin-left:12px;padding:4px 10px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-size:12px;cursor:pointer">Cancelar</button>
   </div>
   <div class="diag-result" id="diag-result">
     <div class="diag-result-header">
@@ -361,7 +334,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
         <option>Educação</option><option>Beleza</option>
       </select>
     </div>
-    <div class="form-group"><label>Cidade</label><input type="text" id="s-cidade" placeholder="São Paulo" value="São Paulo"></div>
+    <div class="form-group"><label>Cidade</label><input type="text" id="s-cidade" value="São Paulo"></div>
     <div class="form-group"><label>Potencial</label>
       <select id="s-potencial">
         <option>Todos os tamanhos</option><option>Pequeno (até R$ 3k/mês)</option>
@@ -378,35 +351,27 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <script>
 let clients = JSON.parse(localStorage.getItem('mediax_clients')||'[]');
 let apiKey = localStorage.getItem('mediax_apikey')||'';
+let diagController = null;
+let timerInterval = null;
 
 function updateApiIndicator(){
-  const dot = document.getElementById('api-dot');
-  const txt = document.getElementById('api-status-text');
+  const ok = apiKey && apiKey.startsWith('sk-');
+  document.getElementById('api-dot').className = 'api-dot ' + (ok ? 'ok' : 'err');
+  document.getElementById('api-status-text').textContent = ok ? 'API ativa' : 'API Key';
   const warn = document.getElementById('diag-no-key');
-  if(apiKey && apiKey.startsWith('sk-')){
-    dot.className='api-dot ok';
-    txt.textContent='API ativa';
-    if(warn) warn.classList.remove('show');
-  } else {
-    dot.className='api-dot err';
-    txt.textContent='API Key';
-    if(warn) warn.classList.add('show');
-  }
+  if(warn) ok ? warn.classList.remove('show') : warn.classList.add('show');
 }
 
-function openModal(){
-  document.getElementById('api-modal').classList.add('show');
-  document.getElementById('api-key-input').value = apiKey;
-}
-function closeModal(){document.getElementById('api-modal').classList.remove('show')}
+function openModal(){ document.getElementById('api-modal').classList.add('show'); document.getElementById('api-key-input').value = apiKey; }
+function closeModal(){ document.getElementById('api-modal').classList.remove('show'); }
 function saveApiKey(){
-  const val = document.getElementById('api-key-input').value.trim();
-  if(!val){toast('Cole sua API Key antes de salvar');return;}
-  apiKey = val;
+  const v = document.getElementById('api-key-input').value.trim();
+  if(!v){ toast('Cole sua API Key antes de salvar'); return; }
+  apiKey = v;
   localStorage.setItem('mediax_apikey', apiKey);
   updateApiIndicator();
   closeModal();
-  toast('✓ API Key salva com sucesso!');
+  toast('✓ API Key salva!');
 }
 
 function showView(v, btn){
@@ -415,33 +380,32 @@ function showView(v, btn){
   document.getElementById('view-'+v).classList.add('active');
   if(btn) btn.classList.add('active');
   if(v==='dashboard') renderDashboard();
-  if(v==='diagnosis'){renderDiagSelect();updateApiIndicator();}
+  if(v==='diagnosis'){ renderDiagSelect(); updateApiIndicator(); }
 }
 
-function toggleChip(el,group){
+function toggleChip(el, group){
   document.querySelectorAll('#'+group+' .chip').forEach(c=>c.classList.remove('sel'));
   el.classList.toggle('sel');
 }
-function getChipVal(group){
-  const s=document.querySelector('#'+group+' .chip.sel');
-  return s?s.textContent:'';
-}
+function getChipVal(group){ const s=document.querySelector('#'+group+' .chip.sel'); return s?s.textContent:''; }
+
 function toast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
+
 function calcScore(c){
   let s=30;
   const inv=parseInt(c.investimento)||0;
-  if(inv>=5000)s+=25;else if(inv>=2000)s+=15;else if(inv>=1000)s+=8;
+  if(inv>=5000)s+=25; else if(inv>=2000)s+=15; else if(inv>=1000)s+=8;
   if(c.midia==='Não investe nada')s+=20;
   if(c.midia==='Impulsiona posts às vezes')s+=12;
   if(c.equipe==='Não tem ninguém')s+=10;
   if(c.desafio==='Gerar mais clientes')s+=10;
-  if(c.desafio==='Não sabe o que fazer')s+=5;
   return Math.min(s,100);
 }
+
 function saveClient(e){
   e.preventDefault();
   const c={
@@ -459,7 +423,7 @@ function saveClient(e){
     desafio:getChipVal('chips-desafio'),
     objetivo:document.getElementById('f-objetivo').value,
     obs:document.getElementById('f-obs').value,
-    status:'lead',diagnostico:null,scoreIA:null,
+    status:'lead', diagnostico:null, scoreIA:null,
     criadoEm:new Date().toLocaleDateString('pt-BR')
   };
   c.score=calcScore(c);
@@ -482,25 +446,25 @@ function statusLabel(s){
   const names={lead:'Lead',diag:'Em diagnóstico',client:'Cliente ativo',lost:'Perdido'};
   return`<span class="status-badge ${map[s]||'status-lead'}">${names[s]||s}</span>`;
 }
+
 function renderDashboard(){
   const tbody=document.getElementById('client-tbody');
   if(!clients.length){
     tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text3)">Nenhum cliente cadastrado. Comece pela aba "Novo cliente".</td></tr>';
   } else {
-    tbody.innerHTML=clients.map(c=>`
-      <tr>
-        <td><strong>${c.nome}</strong><br><span style="font-size:11px;color:var(--text3)">${c.cidade||''} · ${c.criadoEm}</span></td>
-        <td>${c.segmento}</td>
-        <td>R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês</td>
-        <td><div style="font-size:13px;font-weight:500">${c.score}/100</div><div class="score-bar"><div class="score-fill" style="width:${c.score}%"></div></div></td>
-        <td>${statusLabel(c.status)}</td>
-        <td><select style="font-size:11px;padding:4px 6px;width:auto" onchange="updateStatus(${c.id},this.value)">
-          <option value="lead" ${c.status==='lead'?'selected':''}>Lead</option>
-          <option value="diag" ${c.status==='diag'?'selected':''}>Em diagnóstico</option>
-          <option value="client" ${c.status==='client'?'selected':''}>Cliente ativo</option>
-          <option value="lost" ${c.status==='lost'?'selected':''}>Perdido</option>
-        </select></td>
-      </tr>`).join('');
+    tbody.innerHTML=clients.map(c=>`<tr>
+      <td><strong>${c.nome}</strong><br><span style="font-size:11px;color:var(--text3)">${c.cidade||''} · ${c.criadoEm}</span></td>
+      <td>${c.segmento}</td>
+      <td>R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês</td>
+      <td><div style="font-size:13px;font-weight:500">${c.score}/100</div><div class="score-bar"><div class="score-fill" style="width:${c.score}%"></div></div></td>
+      <td>${statusLabel(c.status)}</td>
+      <td><select style="font-size:11px;padding:4px 6px;width:auto" onchange="updateStatus(${c.id},this.value)">
+        <option value="lead" ${c.status==='lead'?'selected':''}>Lead</option>
+        <option value="diag" ${c.status==='diag'?'selected':''}>Em diagnóstico</option>
+        <option value="client" ${c.status==='client'?'selected':''}>Cliente ativo</option>
+        <option value="lost" ${c.status==='lost'?'selected':''}>Perdido</option>
+      </select></td>
+    </tr>`).join('');
   }
   const ativos=clients.filter(c=>c.status==='client');
   const receita=ativos.reduce((a,c)=>a+Number(c.investimento)*.15,0);
@@ -512,96 +476,141 @@ function renderDashboard(){
   document.getElementById('m-leads').textContent=leads.length;
   document.getElementById('m-conv').textContent=conv+'%';
 }
+
 function updateStatus(id,status){
   clients=clients.map(c=>c.id===id?{...c,status}:c);
   localStorage.setItem('mediax_clients',JSON.stringify(clients));
-  renderDashboard();toast('Status atualizado');
+  renderDashboard(); toast('Status atualizado');
 }
+
 function renderDiagSelect(selectId){
   const sel=document.getElementById('diag-select');
-  if(!clients.length){sel.innerHTML='<option value="">Nenhum cliente cadastrado</option>';return;}
+  if(!clients.length){ sel.innerHTML='<option value="">Nenhum cliente cadastrado</option>'; return; }
   sel.innerHTML='<option value="">Selecione uma empresa...</option>'+
     clients.map(c=>`<option value="${c.id}">${c.nome} — ${c.segmento}</option>`).join('');
   if(selectId) sel.value=selectId;
 }
+
+function cancelDiagnosis(){
+  if(diagController) diagController.abort();
+  clearInterval(timerInterval);
+  document.getElementById('diag-loading').classList.remove('show');
+  document.getElementById('timeout-msg').classList.remove('show');
+  document.getElementById('diag-run-btn').disabled=false;
+  toast('Diagnóstico cancelado');
+}
+
 async function runDiagnosis(){
-  if(!apiKey||!apiKey.startsWith('sk-')){openModal();return;}
+  if(!apiKey||!apiKey.startsWith('sk-')){ openModal(); return; }
   const id=parseInt(document.getElementById('diag-select').value);
-  if(!id){toast('Selecione uma empresa primeiro');return;}
+  if(!id){ toast('Selecione uma empresa primeiro'); return; }
   const c=clients.find(x=>x.id===id);
-  if(!c)return;
+  if(!c) return;
+
   document.getElementById('diag-loading').classList.add('show');
   document.getElementById('diag-result').classList.remove('show');
+  document.getElementById('timeout-msg').classList.remove('show');
   document.getElementById('diag-run-btn').disabled=true;
-  const prompt=`Você é um especialista sênior em marketing digital e mídia paga no Brasil.
-Analise este prospect e gere um diagnóstico estratégico completo:
 
-EMPRESA: ${c.nome}
-SEGMENTO: ${c.segmento}
-CIDADE: ${c.cidade||'não informada'}
-PRESENÇA DIGITAL: ${c.site||'não informada'}
-SITUAÇÃO ATUAL DE MÍDIA: ${c.midia||'não informado'}
-CANAIS UTILIZADOS: ${c.canais||'nenhum'}
-EQUIPE INTERNA: ${c.equipe||'não informado'}
-INVESTIMENTO DISPONÍVEL: R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês
-PRINCIPAL DESAFIO: ${c.desafio||'não informado'}
-OBJETIVO: ${c.objetivo||'não informado'}
-OBSERVAÇÕES: ${c.obs||'nenhuma'}
+  // Timer display
+  let secs=0;
+  document.getElementById('diag-timer').textContent='0s';
+  timerInterval=setInterval(()=>{
+    secs++;
+    document.getElementById('diag-timer').textContent=secs+'s';
+    if(secs===20) document.getElementById('timeout-msg').classList.add('show');
+  },1000);
 
-Gere um diagnóstico com EXATAMENTE esta estrutura:
+  // Compact prompt for speed
+  const prompt=`Especialista em marketing digital no Brasil. Analise este prospect e gere diagnóstico:
 
-SCORE DE OPORTUNIDADE: [número de 0 a 100]
+Empresa: ${c.nome} | Segmento: ${c.segmento} | Cidade: ${c.cidade||'?'}
+Mídia atual: ${c.midia||'não informado'} | Canais: ${c.canais||'nenhum'}
+Equipe: ${c.equipe||'?'} | Investimento: R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês
+Desafio: ${c.desafio||'?'} | Objetivo: ${c.objetivo||'?'}
+
+Responda EXATAMENTE neste formato:
+
+SCORE: [0-100]
 
 SITUAÇÃO ATUAL
-[2-3 frases sobre o momento atual da empresa em mídia]
+[2 frases sobre o momento da empresa]
 
-PRINCIPAIS PROBLEMAS IDENTIFICADOS
+PROBLEMAS
 • [problema 1]
 • [problema 2]
 • [problema 3]
 
-OPORTUNIDADES IMEDIATAS (Quick wins)
-• [ação concreta nos primeiros 30 dias]
-• [ação 2]
-• [ação 3]
+QUICK WINS (30 dias)
+• [ação imediata 1]
+• [ação imediata 2]
+• [ação imediata 3]
 
-ESTRATÉGIA RECOMENDADA (90 dias)
-[3-4 frases com a estratégia concreta de mídia]
+ESTRATÉGIA 90 DIAS
+[3 frases com estratégia concreta]
 
 CANAIS PRIORITÁRIOS
-• [canal 1]: [por quê e como usar]
-• [canal 2]: [por quê e como usar]
+• [canal]: [como usar]
+• [canal]: [como usar]
 
-PROPOSTA DE VALOR PARA ESTE CLIENTE
-[2-3 frases em primeira pessoa como consultor]
+PROPOSTA DE VALOR
+[2 frases em primeira pessoa como consultor]
 
-ESTIMATIVA DE RESULTADO EM 90 DIAS
-[expectativa realista com este orçamento]
+RESULTADO ESPERADO
+[expectativa realista em 90 dias]`;
 
-Seja direto, específico e prático.`;
+  diagController=new AbortController();
+
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+      signal:diagController.signal,
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:800,
+        messages:[{role:'user',content:prompt}]
+      })
     });
+
     const data=await res.json();
-    if(data.error){toast('Erro: '+data.error.message);return;}
+    clearInterval(timerInterval);
+
+    if(data.error){
+      toast('Erro da API: '+data.error.message);
+      document.getElementById('diag-loading').classList.remove('show');
+      document.getElementById('timeout-msg').classList.remove('show');
+      document.getElementById('diag-run-btn').disabled=false;
+      return;
+    }
+
     const text=data.content?.[0]?.text||'Erro ao gerar diagnóstico.';
-    const scoreMatch=text.match(/SCORE DE OPORTUNIDADE:\s*(\d+)/);
+    const scoreMatch=text.match(/SCORE:\s*(\d+)/);
     const score=scoreMatch?parseInt(scoreMatch[1]):c.score;
+
     clients=clients.map(x=>x.id===id?{...x,diagnostico:text,scoreIA:score,status:'diag'}:x);
     localStorage.setItem('mediax_clients',JSON.stringify(clients));
+
     document.getElementById('diag-result-name').textContent=c.nome;
     document.getElementById('diag-score-display').textContent=score+'/100';
-    document.getElementById('diag-content').textContent=text.replace(/SCORE DE OPORTUNIDADE:.*\n?/,'').trim();
+    document.getElementById('diag-content').textContent=text.replace(/SCORE:.*\n?/,'').trim();
     document.getElementById('diag-result').classList.add('show');
     toast('✓ Diagnóstico gerado!');
-  }catch(err){
-    toast('Erro de conexão. Verifique sua API Key.');
-    console.error(err);
+
+  } catch(err){
+    clearInterval(timerInterval);
+    if(err.name!=='AbortError'){
+      toast('Erro de conexão. Verifique sua API Key e tente novamente.');
+    }
   }
+
   document.getElementById('diag-loading').classList.remove('show');
+  document.getElementById('timeout-msg').classList.remove('show');
   document.getElementById('diag-run-btn').disabled=false;
 }
 
@@ -659,8 +668,8 @@ function addProspect(i,nome,seg,cidade,pot){
   clients.push(c);
   localStorage.setItem('mediax_clients',JSON.stringify(clients));
   const btn=document.getElementById('padd-'+i);
-  btn.textContent='Adicionado ✓';btn.classList.add('added');btn.disabled=true;
-  toast('✓ '+nome+' adicionado à pipeline!');
+  btn.textContent='Adicionado ✓'; btn.classList.add('added'); btn.disabled=true;
+  toast('✓ '+nome+' adicionado!');
 }
 
 updateApiIndicator();
