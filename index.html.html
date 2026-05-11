@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+  --border:#2a2a2a;--border2:#333;
+  --text:#f0f0f0;--text2:#888;--text3:#555;
+  --accent:#ff5c35;--accent2:#ff8a6a;
+  --success:#22c55e;--warning:#f59e0b;--info:#3b82f6;
+  --font-display:'Syne',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --r:8px;--r2:12px;--r3:16px;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.nav-logo{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-0.5px}
+.nav-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.nav-tab{padding:6px 14px;border-radius:var(--r);border:none;background:transparent;color:var(--text2);font-family:var(--font-body);font-size:13px;cursor:pointer;transition:all .2s}
+.nav-tab:hover{background:var(--bg3);color:var(--text)}
+.nav-tab.active{background:var(--accent);color:#fff;font-weight:500}
+.nav-right{display:flex;align-items:center;gap:8px}
+.api-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);cursor:pointer;padding:5px 10px;border-radius:var(--r);border:1px solid var(--border);transition:all .2s}
+.api-indicator:hover{border-color:var(--border2);color:var(--text2)}
+.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3)}
+.api-dot.ok{background:var(--success)}
+.api-dot.err{background:var(--accent)}
+
+.view{display:none;padding:24px;max-width:900px;margin:0 auto}
+.view.active{display:block}
+
+/* API KEY MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);padding:28px;width:100%;max-width:480px;margin:16px}
+.modal-title{font-family:var(--font-display);font-size:20px;font-weight:800;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.modal-label{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:6px;display:block}
+.modal-input-wrap{display:flex;gap:8px;margin-bottom:8px}
+.modal-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:13px;letter-spacing:.5px}
+.modal-input:focus{outline:none;border-color:var(--accent)}
+.modal-save{padding:10px 18px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.modal-save:hover{background:#e04520}
+.modal-hint{font-size:11px;color:var(--text3);line-height:1.5}
+.modal-hint a{color:var(--accent2);text-decoration:none}
+.modal-hint a:hover{text-decoration:underline}
+.modal-close{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--text3);cursor:pointer;transition:color .2s}
+.modal-close:hover{color:var(--text2)}
+
+/* DASHBOARD */
+.dash-title{font-family:var(--font-display);font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.dash-sub{color:var(--text2);font-size:13px;margin-bottom:24px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
+.metric-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.metric-val{font-family:var(--font-display);font-size:28px;font-weight:700}
+.metric-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.metric-card.accent{border-color:var(--accent);background:rgba(255,92,53,.08)}
+.metric-card.accent .metric-val{color:var(--accent)}
+.section-title{font-family:var(--font-display);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:12px}
+.client-table{width:100%;border-collapse:collapse;margin-bottom:24px}
+.client-table th{text-align:left;padding:8px 12px;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.client-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.client-table tr:last-child td{border-bottom:none}
+.client-table tr:hover td{background:var(--bg2)}
+.status-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.status-lead{background:rgba(59,130,246,.15);color:#60a5fa}
+.status-diag{background:rgba(245,158,11,.15);color:#fbbf24}
+.status-client{background:rgba(34,197,94,.15);color:#4ade80}
+.status-lost{background:rgba(255,92,53,.1);color:var(--accent2)}
+.score-bar{height:4px;background:var(--border2);border-radius:2px;width:80px;overflow:hidden;margin-top:3px}
+.score-fill{height:4px;border-radius:2px;background:var(--accent)}
+
+/* FORM */
+.page-title{font-family:var(--font-display);font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.page-sub{color:var(--text2);font-size:13px;margin-bottom:24px;max-width:480px}
+.form-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:16px}
+.form-section-title{font-family:var(--font-display);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+label{font-size:12px;color:var(--text2);font-weight:500}
+input,select,textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-family:var(--font-body);font-size:13px;transition:border .2s;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+select option{background:var(--bg3)}
+textarea{resize:vertical;min-height:80px}
+.range-wrap{display:flex;align-items:center;gap:10px}
+input[type=range]{flex:1;accent-color:var(--accent)}
+.range-val{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--accent);min-width:80px;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;font-family:var(--font-body)}
+.chip:hover,.chip.sel{background:var(--accent);border-color:var(--accent);color:#fff}
+.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--r2);color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:all .2s;margin-top:8px}
+.submit-btn:hover{background:#e04520;transform:translateY(-1px)}
+
+/* DIAGNOSIS */
+.diag-select-wrap{display:flex;gap:10px;align-items:flex-end;margin-bottom:20px}
+.diag-select-wrap select{flex:1}
+.diag-btn{padding:10px 20px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.diag-btn:hover{background:#e04520}
+.diag-btn:disabled{background:var(--bg4);color:var(--text3);cursor:not-allowed}
+.diag-loading{display:none;text-align:center;padding:40px;color:var(--text2)}
+.diag-loading.show{display:block}
+.loader{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.diag-result{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.diag-result.show{display:block}
+.diag-result-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.diag-result-name{font-family:var(--font-display);font-size:16px;font-weight:700}
+.diag-score-big{font-family:var(--font-display);font-size:32px;font-weight:800;color:var(--accent)}
+.diag-result-body{padding:20px}
+.diag-content{color:var(--text);font-size:13px;line-height:1.8;white-space:pre-wrap}
+
+/* SEARCH */
+.search-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:20px;align-items:flex-end}
+.search-btn{padding:9px 20px;background:var(--accent);border:none;border-radius:var(--r);color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.search-btn:hover{background:#e04520}
+.prospect-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:16px;transition:border .2s;margin-bottom:10px}
+.prospect-card:hover{border-color:var(--border2)}
+.prospect-avatar{width:40px;height:40px;border-radius:var(--r);background:var(--bg4);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--accent);flex-shrink:0}
+.prospect-info{flex:1}
+.prospect-name{font-weight:500;font-size:14px;margin-bottom:2px}
+.prospect-meta{font-size:12px;color:var(--text2)}
+.prospect-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.ptag{padding:2px 8px;border-radius:12px;font-size:11px;background:var(--bg4);color:var(--text2)}
+.padd-btn{padding:6px 12px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--text);font-size:12px;cursor:pointer;transition:all .2s;font-family:var(--font-body);white-space:nowrap}
+.padd-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.padd-btn.added{background:rgba(34,197,94,.1);border-color:#22c55e;color:#4ade80;cursor:default}
+.empty-state{text-align:center;padding:40px;color:var(--text3);font-size:13px}
+
+/* ALERT BOX */
+.alert{padding:12px 16px;border-radius:var(--r);font-size:13px;margin-bottom:16px;display:none}
+.alert.show{display:block}
+.alert-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
+.alert-ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#4ade80}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:var(--r);padding:12px 16px;font-size:13px;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.view.active{animation:fadeIn .3s ease}
+</style>
+</head>
+<body>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="api-modal">
+  <div class="modal">
+    <div class="modal-title">Configurar API Key</div>
+    <div class="modal-sub">Cole sua chave da Anthropic para ativar o diagnóstico por IA. A chave fica salva apenas no seu navegador.</div>
+    <label class="modal-label">Sua API Key</label>
+    <div class="modal-input-wrap">
+      <input class="modal-input" type="password" id="api-key-input" placeholder="sk-ant-...">
+      <button class="modal-save" onclick="saveApiKey()">Salvar</button>
+    </div>
+    <div class="modal-hint">
+      Não tem uma chave ainda? <a href="https://console.anthropic.com" target="_blank">Crie em console.anthropic.com</a> — gratuito para começar. Vá em <strong>API Keys → Create Key</strong>.
+    </div>
+    <span class="modal-close" onclick="closeModal()">Fechar</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-logo">MEDIAX</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showView('dashboard',this)">Dashboard</button>
+    <button class="nav-tab" onclick="showView('prospect',this)">Novo cliente</button>
+    <button class="nav-tab" onclick="showView('diagnosis',this)">Diagnóstico IA</button>
+    <button class="nav-tab" onclick="showView('search',this)">Prospectar</button>
+  </div>
+  <div class="nav-right">
+    <div class="api-indicator" onclick="openModal()" title="Configurar API Key">
+      <div class="api-dot" id="api-dot"></div>
+      <span id="api-status-text">API Key</span>
+    </div>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<div class="view active" id="view-dashboard">
+  <div class="dash-title">Visão geral</div>
+  <div class="dash-sub">Acompanhe sua pipeline e receita estimada</div>
+  <div class="metrics">
+    <div class="metric-card accent">
+      <div class="metric-label">Receita estimada</div>
+      <div class="metric-val" id="m-receita">R$ 0</div>
+      <div class="metric-sub" id="m-receita-sub">0 clientes ativos</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Pipeline total</div>
+      <div class="metric-val" id="m-pipeline">0</div>
+      <div class="metric-sub">empresas cadastradas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Leads quentes</div>
+      <div class="metric-val" id="m-leads">0</div>
+      <div class="metric-sub">score acima de 70</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Taxa conversão</div>
+      <div class="metric-val" id="m-conv">0%</div>
+      <div class="metric-sub">lead → cliente ativo</div>
+    </div>
+  </div>
+  <div class="section-title">Pipeline de clientes</div>
+  <table class="client-table">
+    <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Segmento</th>
+        <th>Investimento/mês</th>
+        <th>Score</th>
+        <th>Status</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody id="client-tbody"></tbody>
+  </table>
+</div>
+
+<!-- NOVO CLIENTE -->
+<div class="view" id="view-prospect">
+  <div class="page-title">Cadastrar empresa</div>
+  <div class="page-sub">Preencha o questionário inicial para entender as necessidades do cliente.</div>
+  <form id="prospect-form" onsubmit="saveClient(event)">
+    <div class="form-section">
+      <div class="form-section-title">Dados da empresa</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Nome da empresa *</label><input type="text" id="f-nome" required placeholder="Ex: Padaria Central"></div>
+        <div class="form-group"><label>Segmento *</label>
+          <select id="f-segmento" required>
+            <option value="">Selecione...</option>
+            <option>Alimentação / Restaurante</option><option>Saúde / Clínica</option>
+            <option>Varejo / Loja</option><option>Serviços B2B</option>
+            <option>Educação</option><option>Beleza / Estética</option>
+            <option>Imóveis</option><option>Tecnologia</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Cidade</label><input type="text" id="f-cidade" placeholder="São Paulo"></div>
+        <div class="form-group"><label>Site ou Instagram</label><input type="text" id="f-site" placeholder="@empresa ou www.empresa.com.br"></div>
+        <div class="form-group"><label>Contato (nome)</label><input type="text" id="f-contato" placeholder="Nome do decisor"></div>
+        <div class="form-group"><label>Telefone / WhatsApp</label><input type="text" id="f-tel" placeholder="(11) 99999-9999"></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Situação atual de mídia</div>
+      <div class="form-grid">
+        <div class="form-group full"><label>A empresa já investe em mídia paga?</label>
+          <div class="chips" id="chips-midia">
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Não investe nada</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Impulsiona posts às vezes</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Tem campanhas rodando</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-midia')">Tem agência atual</button>
+          </div>
+        </div>
+        <div class="form-group full"><label>Quais canais utiliza hoje?</label>
+          <div class="chips" id="chips-canais">
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Instagram</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Facebook</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Google Ads</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">TikTok</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">YouTube</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">WhatsApp</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-canais')">Nenhum</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Investimento</div>
+      <div class="form-grid">
+        <div class="form-group full"><label>Quanto investe (ou poderia investir) em mídia por mês?</label>
+          <div class="range-wrap">
+            <input type="range" id="f-invest" min="500" max="30000" step="500" value="2000" oninput="document.getElementById('f-invest-val').textContent='R$ '+Number(this.value).toLocaleString('pt-BR')">
+            <span class="range-val" id="f-invest-val">R$ 2.000</span>
+          </div>
+        </div>
+        <div class="form-group full"><label>Tem equipe interna de marketing?</label>
+          <div class="chips" id="chips-equipe">
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Não tem ninguém</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">1 pessoa acumulando função</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Tem equipe pequena</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-equipe')">Equipe estruturada</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Desafios e objetivos</div>
+      <div class="form-grid">
+        <div class="form-group full"><label>Principal desafio hoje</label>
+          <div class="chips" id="chips-desafio">
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Gerar mais clientes</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Aumentar ticket médio</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Fidelizar clientes</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Melhorar presença digital</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Concorrência cresceu</button>
+            <button type="button" class="chip" onclick="toggleChip(this,'chips-desafio')">Não sabe o que fazer</button>
+          </div>
+        </div>
+        <div class="form-group full"><label>Objetivo principal nos próximos 6 meses</label>
+          <textarea id="f-objetivo" placeholder="Ex: Dobrar número de clientes, lançar produto novo..."></textarea>
+        </div>
+        <div class="form-group full"><label>Observações adicionais</label>
+          <textarea id="f-obs" placeholder="Qualquer contexto relevante..."></textarea>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn">Salvar e ir para diagnóstico →</button>
+  </form>
+</div>
+
+<!-- DIAGNÓSTICO -->
+<div class="view" id="view-diagnosis">
+  <div class="page-title">Diagnóstico por IA</div>
+  <div class="page-sub">Selecione um cliente e gere uma análise completa com recomendações estratégicas.</div>
+  <div class="alert alert-warn" id="diag-no-key">
+    ⚠ API Key não configurada. Clique em <strong>API Key</strong> no canto superior direito para ativar o diagnóstico por IA.
+  </div>
+  <div class="diag-select-wrap">
+    <div class="form-group" style="flex:1"><label>Selecionar empresa</label>
+      <select id="diag-select"><option value="">Nenhum cliente cadastrado</option></select>
+    </div>
+    <button class="diag-btn" id="diag-run-btn" onclick="runDiagnosis()">Gerar diagnóstico IA</button>
+  </div>
+  <div class="diag-loading" id="diag-loading">
+    <div class="loader"></div>
+    <div style="font-size:13px">Analisando e gerando diagnóstico...</div>
+    <div style="font-size:12px;color:var(--text3);margin-top:4px">Isso pode levar alguns segundos</div>
+  </div>
+  <div class="diag-result" id="diag-result">
+    <div class="diag-result-header">
+      <div>
+        <div class="diag-result-name" id="diag-result-name"></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">Diagnóstico gerado por IA</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:2px">Score de oportunidade</div>
+        <div class="diag-score-big" id="diag-score-display">—</div>
+      </div>
+    </div>
+    <div class="diag-result-body">
+      <div class="diag-content" id="diag-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROSPECTAR -->
+<div class="view" id="view-search">
+  <div class="page-title">Prospectar empresas</div>
+  <div class="page-sub">Encontre empresas com potencial e adicione à sua pipeline.</div>
+  <div class="search-form">
+    <div class="form-group"><label>Segmento</label>
+      <select id="s-segmento">
+        <option>Restaurante / Alimentação</option><option>Clínica / Saúde</option>
+        <option>Varejo / Loja</option><option>Serviços</option>
+        <option>Educação</option><option>Beleza</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Cidade</label><input type="text" id="s-cidade" placeholder="São Paulo" value="São Paulo"></div>
+    <div class="form-group"><label>Potencial</label>
+      <select id="s-potencial">
+        <option>Todos os tamanhos</option><option>Pequeno (até R$ 3k/mês)</option>
+        <option>Médio (R$ 3k–10k/mês)</option><option>Grande (acima R$ 10k/mês)</option>
+      </select>
+    </div>
+    <button class="search-btn" onclick="runSearch()">Buscar →</button>
+  </div>
+  <div id="search-results"><div class="empty-state">Use os filtros acima para encontrar empresas com potencial.</div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let clients = JSON.parse(localStorage.getItem('mediax_clients')||'[]');
+let apiKey = localStorage.getItem('mediax_apikey')||'';
+
+function updateApiIndicator(){
+  const dot = document.getElementById('api-dot');
+  const txt = document.getElementById('api-status-text');
+  const warn = document.getElementById('diag-no-key');
+  if(apiKey && apiKey.startsWith('sk-')){
+    dot.className='api-dot ok';
+    txt.textContent='API ativa';
+    if(warn) warn.classList.remove('show');
+  } else {
+    dot.className='api-dot err';
+    txt.textContent='API Key';
+    if(warn) warn.classList.add('show');
+  }
+}
+
+function openModal(){
+  document.getElementById('api-modal').classList.add('show');
+  document.getElementById('api-key-input').value = apiKey;
+}
+function closeModal(){document.getElementById('api-modal').classList.remove('show')}
+function saveApiKey(){
+  const val = document.getElementById('api-key-input').value.trim();
+  if(!val){toast('Cole sua API Key antes de salvar');return;}
+  apiKey = val;
+  localStorage.setItem('mediax_apikey', apiKey);
+  updateApiIndicator();
+  closeModal();
+  toast('✓ API Key salva com sucesso!');
+}
+
+function showView(v, btn){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(v==='dashboard') renderDashboard();
+  if(v==='diagnosis'){renderDiagSelect();updateApiIndicator();}
+}
+
+function toggleChip(el,group){
+  document.querySelectorAll('#'+group+' .chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.toggle('sel');
+}
+function getChipVal(group){
+  const s=document.querySelector('#'+group+' .chip.sel');
+  return s?s.textContent:'';
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+function calcScore(c){
+  let s=30;
+  const inv=parseInt(c.investimento)||0;
+  if(inv>=5000)s+=25;else if(inv>=2000)s+=15;else if(inv>=1000)s+=8;
+  if(c.midia==='Não investe nada')s+=20;
+  if(c.midia==='Impulsiona posts às vezes')s+=12;
+  if(c.equipe==='Não tem ninguém')s+=10;
+  if(c.desafio==='Gerar mais clientes')s+=10;
+  if(c.desafio==='Não sabe o que fazer')s+=5;
+  return Math.min(s,100);
+}
+function saveClient(e){
+  e.preventDefault();
+  const c={
+    id:Date.now(),
+    nome:document.getElementById('f-nome').value,
+    segmento:document.getElementById('f-segmento').value,
+    cidade:document.getElementById('f-cidade').value,
+    site:document.getElementById('f-site').value,
+    contato:document.getElementById('f-contato').value,
+    tel:document.getElementById('f-tel').value,
+    investimento:document.getElementById('f-invest').value,
+    midia:getChipVal('chips-midia'),
+    canais:getChipVal('chips-canais'),
+    equipe:getChipVal('chips-equipe'),
+    desafio:getChipVal('chips-desafio'),
+    objetivo:document.getElementById('f-objetivo').value,
+    obs:document.getElementById('f-obs').value,
+    status:'lead',diagnostico:null,scoreIA:null,
+    criadoEm:new Date().toLocaleDateString('pt-BR')
+  };
+  c.score=calcScore(c);
+  clients.push(c);
+  localStorage.setItem('mediax_clients',JSON.stringify(clients));
+  toast('✓ '+c.nome+' cadastrado!');
+  document.getElementById('prospect-form').reset();
+  document.querySelectorAll('.chip').forEach(ch=>ch.classList.remove('sel'));
+  document.getElementById('f-invest-val').textContent='R$ 2.000';
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-diagnosis').classList.add('active');
+  document.querySelectorAll('.nav-tab')[2].classList.add('active');
+  renderDiagSelect(c.id);
+  updateApiIndicator();
+}
+
+function statusLabel(s){
+  const map={lead:'status-lead',diag:'status-diag',client:'status-client',lost:'status-lost'};
+  const names={lead:'Lead',diag:'Em diagnóstico',client:'Cliente ativo',lost:'Perdido'};
+  return`<span class="status-badge ${map[s]||'status-lead'}">${names[s]||s}</span>`;
+}
+function renderDashboard(){
+  const tbody=document.getElementById('client-tbody');
+  if(!clients.length){
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text3)">Nenhum cliente cadastrado. Comece pela aba "Novo cliente".</td></tr>';
+  } else {
+    tbody.innerHTML=clients.map(c=>`
+      <tr>
+        <td><strong>${c.nome}</strong><br><span style="font-size:11px;color:var(--text3)">${c.cidade||''} · ${c.criadoEm}</span></td>
+        <td>${c.segmento}</td>
+        <td>R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês</td>
+        <td><div style="font-size:13px;font-weight:500">${c.score}/100</div><div class="score-bar"><div class="score-fill" style="width:${c.score}%"></div></div></td>
+        <td>${statusLabel(c.status)}</td>
+        <td><select style="font-size:11px;padding:4px 6px;width:auto" onchange="updateStatus(${c.id},this.value)">
+          <option value="lead" ${c.status==='lead'?'selected':''}>Lead</option>
+          <option value="diag" ${c.status==='diag'?'selected':''}>Em diagnóstico</option>
+          <option value="client" ${c.status==='client'?'selected':''}>Cliente ativo</option>
+          <option value="lost" ${c.status==='lost'?'selected':''}>Perdido</option>
+        </select></td>
+      </tr>`).join('');
+  }
+  const ativos=clients.filter(c=>c.status==='client');
+  const receita=ativos.reduce((a,c)=>a+Number(c.investimento)*.15,0);
+  const leads=clients.filter(c=>c.score>=70);
+  const conv=clients.length?Math.round(ativos.length/clients.length*100):0;
+  document.getElementById('m-receita').textContent='R$ '+Math.round(receita).toLocaleString('pt-BR');
+  document.getElementById('m-receita-sub').textContent=ativos.length+' cliente'+(ativos.length!==1?'s':'')+' ativo'+(ativos.length!==1?'s':'');
+  document.getElementById('m-pipeline').textContent=clients.length;
+  document.getElementById('m-leads').textContent=leads.length;
+  document.getElementById('m-conv').textContent=conv+'%';
+}
+function updateStatus(id,status){
+  clients=clients.map(c=>c.id===id?{...c,status}:c);
+  localStorage.setItem('mediax_clients',JSON.stringify(clients));
+  renderDashboard();toast('Status atualizado');
+}
+function renderDiagSelect(selectId){
+  const sel=document.getElementById('diag-select');
+  if(!clients.length){sel.innerHTML='<option value="">Nenhum cliente cadastrado</option>';return;}
+  sel.innerHTML='<option value="">Selecione uma empresa...</option>'+
+    clients.map(c=>`<option value="${c.id}">${c.nome} — ${c.segmento}</option>`).join('');
+  if(selectId) sel.value=selectId;
+}
+async function runDiagnosis(){
+  if(!apiKey||!apiKey.startsWith('sk-')){openModal();return;}
+  const id=parseInt(document.getElementById('diag-select').value);
+  if(!id){toast('Selecione uma empresa primeiro');return;}
+  const c=clients.find(x=>x.id===id);
+  if(!c)return;
+  document.getElementById('diag-loading').classList.add('show');
+  document.getElementById('diag-result').classList.remove('show');
+  document.getElementById('diag-run-btn').disabled=true;
+  const prompt=`Você é um especialista sênior em marketing digital e mídia paga no Brasil.
+Analise este prospect e gere um diagnóstico estratégico completo:
+
+EMPRESA: ${c.nome}
+SEGMENTO: ${c.segmento}
+CIDADE: ${c.cidade||'não informada'}
+PRESENÇA DIGITAL: ${c.site||'não informada'}
+SITUAÇÃO ATUAL DE MÍDIA: ${c.midia||'não informado'}
+CANAIS UTILIZADOS: ${c.canais||'nenhum'}
+EQUIPE INTERNA: ${c.equipe||'não informado'}
+INVESTIMENTO DISPONÍVEL: R$ ${Number(c.investimento).toLocaleString('pt-BR')}/mês
+PRINCIPAL DESAFIO: ${c.desafio||'não informado'}
+OBJETIVO: ${c.objetivo||'não informado'}
+OBSERVAÇÕES: ${c.obs||'nenhuma'}
+
+Gere um diagnóstico com EXATAMENTE esta estrutura:
+
+SCORE DE OPORTUNIDADE: [número de 0 a 100]
+
+SITUAÇÃO ATUAL
+[2-3 frases sobre o momento atual da empresa em mídia]
+
+PRINCIPAIS PROBLEMAS IDENTIFICADOS
+• [problema 1]
+• [problema 2]
+• [problema 3]
+
+OPORTUNIDADES IMEDIATAS (Quick wins)
+• [ação concreta nos primeiros 30 dias]
+• [ação 2]
+• [ação 3]
+
+ESTRATÉGIA RECOMENDADA (90 dias)
+[3-4 frases com a estratégia concreta de mídia]
+
+CANAIS PRIORITÁRIOS
+• [canal 1]: [por quê e como usar]
+• [canal 2]: [por quê e como usar]
+
+PROPOSTA DE VALOR PARA ESTE CLIENTE
+[2-3 frases em primeira pessoa como consultor]
+
+ESTIMATIVA DE RESULTADO EM 90 DIAS
+[expectativa realista com este orçamento]
+
+Seja direto, específico e prático.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    if(data.error){toast('Erro: '+data.error.message);return;}
+    const text=data.content?.[0]?.text||'Erro ao gerar diagnóstico.';
+    const scoreMatch=text.match(/SCORE DE OPORTUNIDADE:\s*(\d+)/);
+    const score=scoreMatch?parseInt(scoreMatch[1]):c.score;
+    clients=clients.map(x=>x.id===id?{...x,diagnostico:text,scoreIA:score,status:'diag'}:x);
+    localStorage.setItem('mediax_clients',JSON.stringify(clients));
+    document.getElementById('diag-result-name').textContent=c.nome;
+    document.getElementById('diag-score-display').textContent=score+'/100';
+    document.getElementById('diag-content').textContent=text.replace(/SCORE DE OPORTUNIDADE:.*\n?/,'').trim();
+    document.getElementById('diag-result').classList.add('show');
+    toast('✓ Diagnóstico gerado!');
+  }catch(err){
+    toast('Erro de conexão. Verifique sua API Key.');
+    console.error(err);
+  }
+  document.getElementById('diag-loading').classList.remove('show');
+  document.getElementById('diag-run-btn').disabled=false;
+}
+
+const mockData={
+  'Restaurante / Alimentação':['Cantina do Zé','Bistrô Moderno','Pizzaria Bella Napoli','Sushi Tanaka','Hamburgueria Old School','Padaria São João'],
+  'Clínica / Saúde':['Clínica Vida Plena','Ortopedia Central','Derma Clinic','Odonto Sorriso','Fisio Movimento','Centro Médico Saúde+'],
+  'Varejo / Loja':['Moda Feminina Clara','Tech Store','Casa & Estilo','Pet Shop Amigo Fiel','Ótica Visão Clara','Farmácia Saúde'],
+  'Serviços':['Contabilidade Simples','Advocacia Rápida','Imobiliária Lar Ideal','Seguradora Prime','Consultoria Empresarial','RH Fácil'],
+  'Educação':['Escola de Idiomas Talk','Cursinho Aprovação','Academia Dance','Escola de Música','Colégio Futuro','Instituto Tech'],
+  'Beleza':['Salão Glamour','Barbearia Vintage','Studio Sobrancelhas','Spa Zen','Nail Artist','Clínica Estética Plus']
+};
+const challenges=['Sem presença digital','Perfil desatualizado','Zero anúncios pagos','Concorrência cresceu','Poucos clientes novos','Não aparece no Google'];
+const potentials=['1500','2000','3500','5000','8000','12000'];
+
+function runSearch(){
+  const seg=document.getElementById('s-segmento').value;
+  const cidade=document.getElementById('s-cidade').value||'São Paulo';
+  const names=(mockData[seg]||mockData['Serviços']).slice(0,6);
+  const alreadyAdded=clients.map(c=>c.nome);
+  document.getElementById('search-results').innerHTML=names.map((name,i)=>{
+    const pot=potentials[i%potentials.length];
+    const initials=name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const score=45+Math.floor(Math.random()*45);
+    const added=alreadyAdded.includes(name);
+    return`<div class="prospect-card">
+      <div class="prospect-avatar">${initials}</div>
+      <div class="prospect-info">
+        <div class="prospect-name">${name}</div>
+        <div class="prospect-meta">${seg} · ${cidade}</div>
+        <div class="prospect-tags">
+          <span class="ptag">${challenges[i%challenges.length]}</span>
+          <span class="ptag">Pot. R$ ${Number(pot).toLocaleString('pt-BR')}/mês</span>
+          <span class="ptag">Score ${score}</span>
+        </div>
+      </div>
+      <button class="padd-btn ${added?'added':''}" id="padd-${i}"
+        onclick="addProspect(${i},'${name}','${seg}','${cidade}','${pot}')"
+        ${added?'disabled':''}>
+        ${added?'Adicionado ✓':'+ Adicionar'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function addProspect(i,nome,seg,cidade,pot){
+  const c={
+    id:Date.now(),nome,segmento:seg,cidade,site:'',contato:'',tel:'',
+    investimento:pot,midia:'Não investe nada',canais:'Nenhum',
+    equipe:'Não tem ninguém',desafio:'Gerar mais clientes',
+    objetivo:'',obs:'Adicionado via prospecção',
+    status:'lead',diagnostico:null,scoreIA:null,
+    criadoEm:new Date().toLocaleDateString('pt-BR')
+  };
+  c.score=calcScore(c);
+  clients.push(c);
+  localStorage.setItem('mediax_clients',JSON.stringify(clients));
+  const btn=document.getElementById('padd-'+i);
+  btn.textContent='Adicionado ✓';btn.classList.add('added');btn.disabled=true;
+  toast('✓ '+nome+' adicionado à pipeline!');
+}
+
+updateApiIndicator();
+renderDashboard();
+</script>
+</body>
+</html>
